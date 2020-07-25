@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+ext.minecraftVersion = "1.15"
+
+repositories {
+    mavenCentral()
+    maven { name 'Spigot';      url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { name 'NyaaCat';     url 'https://ci.nyaacat.com/maven/' }
+    maven { name 'aikar';     url 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { name 'worldedit';  url 'https://maven.enginehub.org/repo/'}
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly "org.spigotmc:spigot-api:$minecraftVersion-R0.1-SNAPSHOT"
+    compileOnly('cat.nyaa:nyaacore:7.2-SNAPSHOT') { transitive = false }
+    compileOnly 'co.aikar:taskchain-bukkit:3.7.2'
+    compileOnly 'com.sk89q.worldedit:worldedit-core:7.0.0-SNAPSHOT'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.0.0-SNAPSHOT'
+}

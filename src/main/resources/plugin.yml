@@ -1,0 +1,18 @@
+name: NyaaLobby
+main: cat.nyaa.lobby.LobbyPlugin
+description: "Lobby plugin for community activities"
+version: alpha
+depend: [Vault,NyaaCore,LangUtils]
+softdepend: [Essentials,LockettePro]
+authors: [ReinWD]
+website: "https://github.com/NyaaCat/NyaaLobby"
+api-version: 1.15
+commands:
+  nlobby:
+    description: lobby plugin commands
+    aliases: [lb, lby]
+    permission: nyaa.lobby.admin
+permissions:
+  nyaa.lobby.admin:
+    default: op
+    description: admin command for plugin
