@@ -3,8 +3,12 @@ package cat.nyaa.lobby.teamsign;
 import cat.nyaa.lobby.I18n;
 import cat.nyaa.lobby.LobbyPlugin;
 import cat.nyaa.lobby.lobby.Lobby;
+import cat.nyaa.lobby.lobby.LobbyManager;
+import cat.nyaa.lobby.lobby.SerializedLocation;
+import cat.nyaa.lobby.lobby.SerializedSpawnPoint;
 import cat.nyaa.nyaacore.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -20,6 +24,13 @@ public class TeamWrapper {
     private Player leader;
     private int limit;
     private Lobby lobby;
+    private SerializedSpawnPoint spawnPoint;
+
+    public TeamWrapper(Team team) {
+        this.team = team;
+        this.limit = LobbyPlugin.plugin.config().teamLimit;
+        this.lobby = LobbyManager.getInstance().getDefaultLobby();
+    }
 
     public TeamWrapper(Team team, Player creator){
         this(team);
@@ -27,11 +38,6 @@ public class TeamWrapper {
         this.leader = creator;
     }
 
-
-    public TeamWrapper(Team team) {
-        this.team = team;
-        this.limit = LobbyPlugin.plugin.config().teamLimit;
-    }
 
     public void setTeam(Team team) {
         this.team = team;
@@ -114,5 +120,9 @@ public class TeamWrapper {
             messageLeftPlayer.send(player);
         }
         members.forEach(message::send);
+    }
+
+    public void setSpawnPoint(Location location, double radius) {
+        this.spawnPoint= new SerializedSpawnPoint(new SerializedLocation(location), radius);
     }
 }

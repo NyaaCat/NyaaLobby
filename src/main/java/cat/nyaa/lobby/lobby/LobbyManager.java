@@ -60,6 +60,10 @@ public class LobbyManager {
         return lobbyHolder.getLobby(lobby);
     }
 
+    public Lobby getDefaultLobby() {
+        return lobbyHolder.getLobby(lobbyHolder.defaultLobby);
+    }
+
     public static class LobbyHolder extends FileConfigure {
         @Serializable
         String defaultLobby = "";

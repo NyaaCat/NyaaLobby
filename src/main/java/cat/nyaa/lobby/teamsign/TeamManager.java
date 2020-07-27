@@ -61,4 +61,9 @@ public class TeamManager {
     public TeamWrapper getPlayerLoggedOutTeam(Player player) {
         return teamWrapperMap.values().stream().filter(teamWrapper -> teamWrapper.isLogoutMember(player)).findFirst().orElse(null);
     }
+
+    public TeamWrapper getWrappedTeam(String teamName) {
+        Team entryTeam = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamName);
+        return getWrappedTeam(entryTeam);
+    }
 }
