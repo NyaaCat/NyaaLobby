@@ -1,22 +1,19 @@
 package cat.nyaa.lobby.teamsign;
 
 import cat.nyaa.lobby.I18n;
-import cat.nyaa.lobby.region.SerializedLocation;
+import cat.nyaa.lobby.lobby.SerializedLocation;
 import cat.nyaa.lobby.util.Utils;
 import cat.nyaa.nyaacore.Message;
 import cat.nyaa.nyaacore.configuration.ISerializable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-
-import java.util.Arrays;
 
 public class TeamSign implements ISerializable {
     Sign sign;

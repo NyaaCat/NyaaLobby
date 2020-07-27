@@ -1,6 +1,7 @@
-package cat.nyaa.lobby.region;
+package cat.nyaa.lobby.lobby;
 
 import cat.nyaa.nyaacore.configuration.ISerializable;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -14,14 +15,22 @@ public class SerializedLocation implements ISerializable {
     @Serializable
     double z = 0d;
 
-    public SerializedLocation(World world, int x, int y, int z) {
+    public SerializedLocation(World world, double x, double y, double z) {
         this.world = world.getName();
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
+    public SerializedLocation(Location location){
+        World world = location.getWorld();
+        this.world = world == null? "" : world.getName();
+        this.x = location.getX();
+        this.y = location.getY();
+        this.z = location.getZ();
+    }
+
     public Location getLocation() {
-        return null;
+        return new Location(Bukkit.getWorld(world), x, y, z);
     }
 }

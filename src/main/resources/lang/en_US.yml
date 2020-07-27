@@ -1,0 +1,8 @@
+manual:
+  team:
+    setSpawn:
+      description: "set a spawn point for a team"
+      usage: "/nlobby team setSpawn [teamName] <radius default:10>"
+  lobby:
+    create:
+      description: "set default spawn point for a lobby"

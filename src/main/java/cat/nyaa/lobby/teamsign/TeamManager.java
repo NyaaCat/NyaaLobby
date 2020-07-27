@@ -46,4 +46,19 @@ public class TeamManager {
         String name = team.getName();
         return teamWrapperMap.computeIfAbsent(name, n -> new TeamWrapper(team, player));
     }
+
+    public void leaveTeam(Player player){
+        leaveTeam(player, false);
+    }
+
+    public void leaveTeam(Player player, boolean isQuit) {
+        TeamWrapper playerTeam = getPlayerTeam(player);
+        if (playerTeam != null) {
+            playerTeam.playerLeave(player, isQuit);
+        }
+    }
+
+    public TeamWrapper getPlayerLoggedOutTeam(Player player) {
+        return teamWrapperMap.values().stream().filter(teamWrapper -> teamWrapper.isLogoutMember(player)).findFirst().orElse(null);
+    }
 }

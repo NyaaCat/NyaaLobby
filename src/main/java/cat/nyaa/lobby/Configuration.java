@@ -9,6 +9,8 @@ public class Configuration extends PluginConfigure {
     public String language = "en_US";
     @Serializable(name = "team_limit")
     public int teamLimit;
+    @Serializable(name = "default_radius")
+    public double defaultRadius;
 
 
     @Override

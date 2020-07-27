@@ -2,8 +2,8 @@ name: NyaaLobby
 main: cat.nyaa.lobby.LobbyPlugin
 description: "Lobby plugin for community activities"
 version: alpha
-depend: [Vault,NyaaCore,LangUtils]
-softdepend: [Essentials,LockettePro]
+depend: [NyaaCore,LangUtils]
+softdepend: []
 authors: [ReinWD]
 website: "https://github.com/NyaaCat/NyaaLobby"
 api-version: 1.15
