@@ -1,4 +1,4 @@
-package cat.nyaa.lobby.teamsign;
+package cat.nyaa.lobby.team;
 
 import cat.nyaa.lobby.LobbyPlugin;
 import cat.nyaa.nyaacore.configuration.FileConfigure;

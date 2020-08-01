@@ -1,4 +1,4 @@
-package cat.nyaa.lobby.teamsign;
+package cat.nyaa.lobby.team;
 
 import cat.nyaa.lobby.I18n;
 import cat.nyaa.lobby.LobbyPlugin;
@@ -150,6 +150,14 @@ public class TeamWrapper {
 
     public boolean isLogoutMember(Player player){
         return logoutMembers.contains(player.getUniqueId());
+    }
+
+    public void teleportToLobby(){
+        members.stream().map(Bukkit::getOfflinePlayer).filter(OfflinePlayer::isOnline)
+                .map(OfflinePlayer::getPlayer)
+                .forEach(player -> {
+                    lobby.teleportPlayer(player);
+                });
     }
 
     private Scoreboard getScoreBoard() {

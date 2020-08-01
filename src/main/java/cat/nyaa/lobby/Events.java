@@ -1,9 +1,8 @@
 package cat.nyaa.lobby;
 
-import cat.nyaa.lobby.lobby.Lobby;
 import cat.nyaa.lobby.lobby.LobbyManager;
-import cat.nyaa.lobby.teamsign.TeamManager;
-import cat.nyaa.lobby.teamsign.TeamWrapper;
+import cat.nyaa.lobby.team.TeamManager;
+import cat.nyaa.lobby.team.TeamWrapper;
 import cat.nyaa.nyaacore.Message;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scoreboard.Team;
 
 public class Events implements Listener {
     @EventHandler

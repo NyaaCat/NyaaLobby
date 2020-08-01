@@ -1,4 +1,4 @@
-package cat.nyaa.lobby.teamsign;
+package cat.nyaa.lobby.team;
 
 import cat.nyaa.lobby.I18n;
 import cat.nyaa.lobby.lobby.SerializedLocation;

@@ -3,10 +3,8 @@ package cat.nyaa.lobby.score;
 import cat.nyaa.lobby.LobbyPlugin;
 import cat.nyaa.lobby.score.api.ScoreAPI;
 import cat.nyaa.nyaacore.configuration.FileConfigure;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,17 +30,7 @@ public class ScoreApiImpl extends FileConfigure implements ScoreAPI {
         return INSTANCE;
     }
 
-    @Override
-    public void addScore(String session, OfflinePlayer player, double score) {
-        ScoreSession session1 = getSession(session);
-        session1.addScore(player, score);
-    }
-
-    private ScoreSession getSession(String session) {
-        return sessionMap.get(session);
-    }
-
-    private void asyncSave() {
+    public void asyncSave() {
         new BukkitRunnable(){
             @Override
             public void run() {
@@ -54,37 +42,6 @@ public class ScoreApiImpl extends FileConfigure implements ScoreAPI {
     }
 
     @Override
-    public void addScore(String session, Team team, double score) {
-        ScoreSession session1 = getSession(session);
-        session1.addScore(team, score);
-        asyncSave();
-    }
-
-    @Override
-    public double getScore(String session, OfflinePlayer player) {
-        ScoreSession session1 = getSession(session);
-        return session1.getScore(player);
-    }
-
-    @Override
-    public double getScore(String session, Team team) {
-        ScoreSession session1 = getSession(session);
-        return session1.getTeamScore(team) + session1.getMemberScore(team);
-    }
-
-    @Override
-    public double getTeamScore(String session, Team team) {
-        ScoreSession session1 = getSession(session);
-        return session1.getTeamScore(team);
-    }
-
-    @Override
-    public double getMemberScore(String session, Team team) {
-        ScoreSession session1 = getSession(session);
-        return session1.getMemberScore(team);
-    }
-
-    @Override
     protected String getFileName() {
         return "score.yml";
     }
@@ -92,6 +49,11 @@ public class ScoreApiImpl extends FileConfigure implements ScoreAPI {
     @Override
     protected JavaPlugin getPlugin() {
         return LobbyPlugin.plugin;
+    }
+
+    @Override
+    public ScoreSession getOrCreateSession(String name) {
+        return sessionMap.computeIfAbsent(name, str -> new ScoreSession());
     }
 
     @Override

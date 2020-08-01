@@ -1,7 +1,7 @@
 package cat.nyaa.lobby;
 
 import cat.nyaa.lobby.lobby.LobbyManager;
-import cat.nyaa.lobby.teamsign.TeamManager;
+import cat.nyaa.lobby.team.TeamManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,6 +1,7 @@
 package cat.nyaa.lobby.lobby;
 
 import cat.nyaa.lobby.LobbyPlugin;
+import cat.nyaa.lobby.team.TeamWrapper;
 import cat.nyaa.nyaacore.configuration.FileConfigure;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
@@ -94,7 +95,7 @@ public class LobbyManager {
         }
 
         public void setLobby(String name, SerializedSpawnPoint spawnPoint) {
-            this.lobby.put(name, new Lobby(spawnPoint));
+            this.lobby.put(name, new Lobby(name, spawnPoint));
         }
 
         public boolean removeLobby(String name){
@@ -103,7 +104,7 @@ public class LobbyManager {
 
         public void setTeamSpawnPoint(Team team, SerializedSpawnPoint spawnPoint) {
             String name = team.getName();
-            teamSpawnPoint.put(name, new Lobby(spawnPoint));
+            teamSpawnPoint.put(name, new Lobby(name, spawnPoint));
         }
 
         public boolean removeTeamSpawnRegion(Team team){

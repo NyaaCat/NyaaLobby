@@ -1,7 +1,7 @@
 package cat.nyaa.lobby;
 
 import cat.nyaa.lobby.lobby.LobbyCommands;
-import cat.nyaa.lobby.teamsign.TeamCommands;
+import cat.nyaa.lobby.team.TeamCommands;
 import cat.nyaa.nyaacore.ILocalizer;
 import cat.nyaa.nyaacore.cmdreceiver.CommandReceiver;
 import cat.nyaa.nyaacore.cmdreceiver.SubCommand;
