@@ -10,7 +10,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: '*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
            cleanWs()
         }
     }
