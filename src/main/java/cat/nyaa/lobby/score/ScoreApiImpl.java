@@ -93,4 +93,35 @@ public class ScoreApiImpl extends FileConfigure implements ScoreAPI {
     protected JavaPlugin getPlugin() {
         return LobbyPlugin.plugin;
     }
+
+    @Override
+    public void createSession(String name) {
+        sessionMap.put(name, new ScoreSession());
+    }
+
+    @Override
+    public void dumpSession(String name) {
+        ScoreSession scoreSession = sessionMap.get(name);
+        if (scoreSession != null) {
+            new FileConfigure(){
+                @Serializable
+                public ScoreSession session = scoreSession;
+
+                @Override
+                protected String getFileName() {
+                    return "score/dump/"+name+".yml";
+                }
+
+                @Override
+                protected JavaPlugin getPlugin() {
+                    return LobbyPlugin.plugin;
+                }
+            }.save();
+        }
+    }
+
+    @Override
+    public void removeSession(String name) {
+        sessionMap.remove(name);
+    }
 }

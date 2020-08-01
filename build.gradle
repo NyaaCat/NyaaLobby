@@ -25,12 +25,17 @@ dependencies {
     compileOnly 'co.aikar:taskchain-bukkit:3.7.2'
 }
 
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.java.srcDirs
+}
+
 publishing {
     publications {
         mavenRelease(MavenPublication) {
             from components.java
             afterEvaluate {
-                artifacts = [jar]
+                artifacts = [jar, sourcesJar]
             }
             groupId "cat.nyaa"
             artifactId "nyaalobby"
@@ -43,3 +48,5 @@ publishing {
         }
     }
 }
+
+
