@@ -6,6 +6,9 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 
 ext.minecraftVersion = "1.15"
+ext.mavenVersion = "alpha"
+
+String mavenDirectory = System.getenv("MAVEN_DIR") == null ? "$projectDir/repo"   : System.getenv("MAVEN_DIR")
 
 repositories {
     mavenCentral()
@@ -19,4 +22,23 @@ dependencies {
     compileOnly "org.spigotmc:spigot-api:$minecraftVersion-R0.1-SNAPSHOT"
     compileOnly('cat.nyaa:nyaacore:7.2-SNAPSHOT') { transitive = false }
     compileOnly 'co.aikar:taskchain-bukkit:3.7.2'
+}
+
+publishing {
+    publications {
+        mavenRelease(MavenPublication) {
+            from components.java
+            afterEvaluate {
+                artifacts = [jar, apiJar, javadocJar, sourcesJar]
+            }
+            groupId "cat.nyaa"
+            artifactId "lobby"
+            version "$mavenVersion"
+        }
+    }
+    repositories {
+        maven {
+            url "$mavenDirectory"
+        }
+    }
 }
