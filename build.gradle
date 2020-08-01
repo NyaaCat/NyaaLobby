@@ -33,7 +33,7 @@ publishing {
                 artifacts = [jar]
             }
             groupId "cat.nyaa"
-            artifactId "NyaaLobby"
+            artifactId "nyaalobby"
             version "$mavenVersion"
         }
     }
