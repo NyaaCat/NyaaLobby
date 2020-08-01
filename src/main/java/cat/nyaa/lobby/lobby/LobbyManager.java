@@ -5,15 +5,19 @@ import cat.nyaa.nyaacore.configuration.FileConfigure;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class LobbyManager {
     private static LobbyManager INSTANCE;
 
+    private LobbyHolder lobbyHolder;
+
     private LobbyManager() {
         lobbyHolder = new LobbyHolder();
+        this.load();
+    }
+
+    public void load() {
         lobbyHolder.load();
     }
 
@@ -28,8 +32,6 @@ public class LobbyManager {
         return INSTANCE;
     }
 
-    private LobbyHolder lobbyHolder;
-    private Map<UUID, Lobby> lobbyMap = new HashMap<>();
 
     public void setTeamSpawnPoint(Team team, SerializedSpawnPoint region){
         lobbyHolder.setTeamSpawnPoint(team, region);
@@ -64,18 +66,26 @@ public class LobbyManager {
         return lobbyHolder.getLobby(lobbyHolder.defaultLobby);
     }
 
+    public List<String> getLobbyNames() {
+        return new ArrayList<>(lobbyHolder.lobby.keySet());
+    }
+
+    public void save() {
+        lobbyHolder.save();
+    }
+
     public static class LobbyHolder extends FileConfigure {
         @Serializable
         String defaultLobby = "";
         @Serializable
-        Map<String, Lobby> lobby = new HashMap<>();
+        HashMap<String, Lobby> lobby = new HashMap<>();
         @Serializable
-        Map<String, Lobby> teamSpawnPoint = new HashMap<>();
+        HashMap<String, Lobby> teamSpawnPoint = new HashMap<>();
 
 
         @Override
         protected String getFileName() {
-            return "regions.yml";
+            return "lobby.yml";
         }
 
         @Override

@@ -14,8 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 
 public class LobbyCommands extends CommandReceiver {
@@ -27,7 +29,7 @@ public class LobbyCommands extends CommandReceiver {
         super(plugin, _i18n);
     }
 
-    @SubCommand(value = "create", permission = "nyaa.lobby.admin")
+    @SubCommand(value = "create", permission = "nyaa.lobby.admin", tabCompleter = "createCompleter")
     public void onCreate(CommandSender sender, Arguments arguments){
         Player player = asPlayer(sender);
         String lobbyName = arguments.nextString();
@@ -35,10 +37,21 @@ public class LobbyCommands extends CommandReceiver {
         LobbyManager instance = LobbyManager.getInstance();
         SerializedSpawnPoint region = new SerializedSpawnPoint(new SerializedLocation(player.getLocation()), radius);
         instance.setLobby(lobbyName, region);
+        instance.save();
         new Message(I18n.format("lobby.create.success")).send(sender);
     }
-
-    @SubCommand(value = "remove", permission = "nyaa.lobby.admin")
+    public List<String> createCompleter(CommandSender sender, Arguments arguments){
+        ArrayList<String> strs = new ArrayList<>();
+        switch (arguments.remains()){
+            case 1:
+                strs.add("name");
+                break;
+            case 2:
+                strs.add("radius");
+        }
+        return Utils.filtered(arguments, strs);
+    }
+    @SubCommand(value = "remove", permission = "nyaa.lobby.admin", tabCompleter = "nameCompleter")
     public void onRemove(CommandSender sender, Arguments arguments) {
         String lobbyName = arguments.nextString();
         LobbyManager instance = LobbyManager.getInstance();
@@ -49,7 +62,7 @@ public class LobbyCommands extends CommandReceiver {
         }
     }
 
-    @SubCommand(value = "default", permission = "nyaa.lobby.admin")
+    @SubCommand(value = "default", permission = "nyaa.lobby.admin", tabCompleter = "nameCompleter")
     public void onDefault(CommandSender sender, Arguments arguments){
         String def = arguments.nextString();
         LobbyManager instance = LobbyManager.getInstance();
@@ -61,9 +74,19 @@ public class LobbyCommands extends CommandReceiver {
         new Message(I18n.format("lobby.default.success", def)).send(sender);
     }
 
+    public List<String> nameCompleter(CommandSender sender, Arguments arguments){
+        ArrayList<String> strs = new ArrayList<>();
+        switch (arguments.remains()){
+            case 1:
+                strs.addAll(LobbyManager.getInstance().getLobbyNames());
+                break;
+        }
+        return Utils.filtered(arguments, strs);
+    }
+
     private boolean confirm = false;
 
-    @SubCommand(value = "tpAll", permission = "nyaa.lobby.admin")
+    @SubCommand(value = "tpAll", permission = "nyaa.lobby.admin", tabCompleter = "nameCompleter")
     public void onTpAll(CommandSender sender, Arguments arguments){
         String lobby = arguments.nextString();
         LobbyManager instance = LobbyManager.getInstance();
@@ -73,9 +96,13 @@ public class LobbyCommands extends CommandReceiver {
         }
         if (!confirm){
             Message send = new Message(I18n.format("lobby.tpall.confirm", lobby)).send(sender);
+            confirm = true;
             new BukkitRunnable(){
                 @Override
                 public void run() {
+                    if(!confirm) {
+                        return;
+                    }
                     confirm = false;
                     new Message(I18n.format("lobby.tpall.abort")).send(sender);
                 }
@@ -87,7 +114,7 @@ public class LobbyCommands extends CommandReceiver {
         Lobby lobby1 = instance.getLobby(lobby);
         Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
         Iterator<? extends Player> iterator = onlinePlayers.iterator();
-        int batchSize = onlinePlayers.size() / 20;
+        int batchSize = Math.max(onlinePlayers.size() / 20, 1);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -96,6 +123,7 @@ public class LobbyCommands extends CommandReceiver {
                         if (!iterator.hasNext()) {
                             this.cancel();
                             new Message(I18n.format("lobby.tpall.stopped")).send(sender);
+                            return;
                         }
                         lobby1.teleportPlayer(iterator.next());
                     }
@@ -107,6 +135,7 @@ public class LobbyCommands extends CommandReceiver {
             }
         }.runTaskTimer(LobbyPlugin.plugin, 0, 1);
         new Message(I18n.format("lobby.tpall.started")).send(sender);
+        confirm = false;
     }
 
 

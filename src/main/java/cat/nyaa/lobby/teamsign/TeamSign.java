@@ -24,6 +24,15 @@ public class TeamSign implements ISerializable {
     @Serializable
     String team;
 
+    public TeamSign() {
+    }
+
+    public TeamSign(Sign sign, Team team) {
+        this.sign = sign;
+        this.location = new SerializedLocation(sign.getLocation());
+        this.team = team.getName();
+    }
+
     @Override
     public void deserialize(ConfigurationSection config) {
         ISerializable.deserialize(config, this);
@@ -59,6 +68,9 @@ public class TeamSign implements ISerializable {
             return;
         }
 
+        wrappedTeam.playerJoin(player);
+        wrappedTeam.teleport(player);
+
     }
 
     public void updateSign(){
@@ -70,7 +82,8 @@ public class TeamSign implements ISerializable {
             color = team.getColor();
         }
 
-        String title = Utils.colored(String.format("[&" + color.getChar() + "TEAM %s&r]", team));
+        String name = team!=null?team.getName():"";
+        String title = Utils.colored(String.format("[TEAM &" + color.getChar() +"%s&r]", name));
         String leader = Utils.colored(I18n.format("sign.leader.no_leader"));
         String members;
         String hint = Utils.colored(I18n.format("sign.hint.click_to_join"));
@@ -93,7 +106,8 @@ public class TeamSign implements ISerializable {
         sign.setLine(0, title);
         sign.setLine(1, leader);
         sign.setLine(2, members);
-        sign.setLine(3, leader);
+        sign.setLine(3, hint);
+        sign.update();
     }
 
     public boolean isValid() {

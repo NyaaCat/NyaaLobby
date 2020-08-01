@@ -6,7 +6,11 @@ public class SerializedSpawnPoint implements ISerializable {
     @Serializable
     SerializedLocation center;
     @Serializable
-    double radius;
+    double radius = 5;
+
+    public SerializedSpawnPoint(){
+
+    }
 
     public SerializedSpawnPoint(SerializedLocation center, double radius) {
         this.center = center;
@@ -19,6 +23,10 @@ public class SerializedSpawnPoint implements ISerializable {
 
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    public SerializedLocation getCenter() {
+        return center;
     }
 
     public double getRadius() {

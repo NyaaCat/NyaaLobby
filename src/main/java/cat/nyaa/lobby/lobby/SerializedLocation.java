@@ -15,6 +15,8 @@ public class SerializedLocation implements ISerializable {
     @Serializable
     double z = 0d;
 
+    public SerializedLocation(){}
+
     public SerializedLocation(World world, double x, double y, double z) {
         this.world = world.getName();
         this.x = x;
