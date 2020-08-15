@@ -1,12 +1,10 @@
 package cat.nyaa.lobby.score;
 
-import cat.nyaa.lobby.LobbyPlugin;
 import cat.nyaa.lobby.score.api.ScoreHolder;
 import cat.nyaa.lobby.team.TeamManager;
 import cat.nyaa.lobby.team.TeamWrapper;
 import cat.nyaa.nyaacore.configuration.ISerializable;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;

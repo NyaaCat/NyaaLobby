@@ -1,12 +1,13 @@
 package cat.nyaa.lobby.lobby;
 
 import cat.nyaa.lobby.LobbyPlugin;
-import cat.nyaa.lobby.team.TeamWrapper;
 import cat.nyaa.nyaacore.configuration.FileConfigure;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class LobbyManager {
     private static LobbyManager INSTANCE;
